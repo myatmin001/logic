@@ -42,14 +42,14 @@ void infix_to_rpn(const char *infix, char *rpn_out) {
 
     for (int i = 0; infix[i]; i++) {
         if (infix[i] >= '0' && infix[i] <= '9') {  // Check if it's a digit
-            rpn_out[rpnIndex++] = infix[i];
-            rpn_out[rpnIndex++] = ' ';
+            rpn_out[rpnIndex] = infix[i];
+            rpnIndex++;
         } else if (infix[i] == '+' || infix[i] == '-' || infix[i] == '*' || infix[i] == '/') {  // Check for operators
             while (s.count > 0 && precedence(s.data[s.count - 1]) >= precedence(infix[i])) {
                 int poppedValue;
                 pop(&poppedValue);
-                rpn_out[rpnIndex++] = poppedValue;
-                rpn_out[rpnIndex++] = ' ';
+                rpn_out[rpnIndex] = poppedValue;
+                rpnIndex++;
             }
             push(infix[i]);
         }
@@ -58,8 +58,8 @@ void infix_to_rpn(const char *infix, char *rpn_out) {
     while (s.count > 0) {
         int poppedValue;
         pop(&poppedValue);
-        rpn_out[rpnIndex++] = poppedValue;
-        rpn_out[rpnIndex++] = ' ';
+        rpn_out[rpnIndex] = poppedValue;
+        rpnIndex++;
     }
     rpn_out[rpnIndex] = '\0';
 }
